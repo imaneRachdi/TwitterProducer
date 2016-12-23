@@ -11,12 +11,21 @@ import java.io.Serializable;
  */
 class Filterimplements  implements Serializable, TwitterSource.EndpointInitializer {
 
+String topic ;
+
+    public Filterimplements(String topic) {
+        this.topic = topic;
+    }
 
     public StreamingEndpoint createEndpoint() {
         StatusesFilterEndpoint endpoint = new StatusesFilterEndpoint();
+        if(topic=="New york")
         endpoint.locations(Lists.newArrayList(new Location(new Location.Coordinate(-73.935242,40.730610),new Location.Coordinate(-74.935242,41.730610) )));
-        endpoint.locations(Lists.newArrayList( new Location(new Location.Coordinate(2.294694,48.858093),new Location.Coordinate(2.19,49) )));
-        endpoint.locations(Lists.newArrayList(  new Location(new Location.Coordinate(-0.076132,51.508530),new Location.Coordinate(0.75,51.30) )));
+        if(topic=="Paris")
+            endpoint.locations(Lists.newArrayList( new Location(new Location.Coordinate(2.294694,48.858093),new Location.Coordinate(2.19,49) )));
+        if(topic=="London")
+
+            endpoint.locations(Lists.newArrayList(  new Location(new Location.Coordinate(-0.076132,51.508530),new Location.Coordinate(0.75,51.30) )));
         return endpoint ;
     }
 

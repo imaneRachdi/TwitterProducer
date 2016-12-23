@@ -49,7 +49,7 @@ public class FlinkTwitterProducer  implements Serializable {
         p.setProperty(TwitterSource.TOKEN_SECRET, secret);
 
 
-        TwitterSource.EndpointInitializer endFilt = new Filterimplements() ;
+        TwitterSource.EndpointInitializer endFilt = new Filterimplements(topic) ;
 
 		while(true)		{
             TwitterSource source = new TwitterSource(p);
