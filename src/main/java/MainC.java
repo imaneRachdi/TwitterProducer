@@ -6,8 +6,12 @@
 
 /**
  *
- * @author imen
- */
+To see The tweets you must  onsume messages on topic twitter-topic to verify the incoming message stream.
+Shell
+bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic <topic-name> --from-beginning 
+but first make sure the zookeeper and the server Kafka are running
+/////////
+you can provide the topic name as an argument java */
 public class MainC {
     public static void main(String[] args) {
 		try {
