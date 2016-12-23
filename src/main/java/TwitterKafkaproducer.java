@@ -21,6 +21,10 @@ import com.twitter.hbc.core.processor.StringDelimitedProcessor;
 import com.twitter.hbc.httpclient.auth.Authentication;
 import com.twitter.hbc.httpclient.auth.OAuth1;
 import org.apache.flink.api.java.utils.ParameterTool;
+import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer08;
+import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 
 public class TwitterKafkaproducer {
 
@@ -33,9 +37,10 @@ public class TwitterKafkaproducer {
 		properties.put("serializer.class", "kafka.serializer.StringEncoder");
 		properties.put("client.id","camus");
 		ProducerConfig producerConfig = new ProducerConfig(properties);
-		kafka.javaapi.producer.Producer<String, String> producer = new kafka.javaapi.producer.Producer<String, String>(
-				producerConfig);
+	//	kafka.javaapi.producer.Producer<String, String> producer = new kafka.javaapi.producer.Producer<String, String>(
+		//		producerConfig);
 
+        DataStream<String> dataStream ;
 		BlockingQueue<String> queue = new LinkedBlockingQueue<String>(10000);
 		StatusesFilterEndpoint endpoint = new StatusesFilterEndpoint();
 		// add some track terms
@@ -59,9 +64,11 @@ endpoint.locations(Lists.newArrayList(new Location(new Location.Coordinate(-73.9
 
 		// Establish a connection
 		client.connect();
-
+		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+		env.enableCheckpointing(5000);
 		// Do whatever needs to be done with messages
-while(true)		{	KeyedMessage<String, String> message = null;
+/*while(true)		{	KeyedMessage<String, String> message = null;
+
 			try {
 				message = new KeyedMessage<String, String>(topic, queue.take());
 			} catch (InterruptedException e) {
@@ -69,6 +76,22 @@ while(true)		{	KeyedMessage<String, String> message = null;
 			}
 			producer.send(message);
 		}
+
+		while(true)		{
+			KeyedMessage<String, String> message = null;
+
+			try {
+				message = new KeyedMessage<String, String>(topic, queue.take());
+				message.addSink(new FlinkKafkaProducer08<String>("localhost:9092", topic, new SimpleStringSchema()));
+
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
+*/
+
+
 
 	}
 
