@@ -60,7 +60,7 @@ public class FlinkTwitterProducer  implements Serializable {
 
 				streamSource.addSink(new FlinkKafkaProducer08<String>(broker_list, topic, new SimpleStringSchema()));
 
-
+env.execute() ; 
 		}
 
 
